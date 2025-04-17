@@ -4,6 +4,6 @@
 3. Run the app
 
 
-## assessment-technical-ts
-Template repo for technical assessments in TypeScript
+## assessment-technical-ts-scenario1
+Template repo for technical assessments in TypeScript, scenario 1.
 
