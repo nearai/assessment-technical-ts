@@ -1,18 +1,15 @@
 services:
   app:
-    build: 
+    build:
       context: ..
       dockerfile: .devcontainer/Dockerfile
     volumes:
-      - ..:/workspace:cached
-    command: bash -c "/workspace/.devcontainer/run-migrations.sh && npm run dev"
+      - ..:/workspace
+    command: sleep infinity
     environment:
-      - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
+      - DATABASE_URL=postgresql://postgres:postgres@localhost:5432/postgres
       - NODE_ENV=development
-    depends_on:
-      - db
-    networks:
-      - app-network
+    network_mode: host
 
   db:
     image: postgres:16
@@ -24,14 +21,7 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
       POSTGRES_DB: agent_discovery
-    ports:
-      - "5432:5432"
-    networks:
-      - app-network
-
-networks:
-  app-network:
-    driver: bridge
+    network_mode: host
 
 volumes:
   postgres-data:
