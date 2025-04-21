@@ -1,25 +1,21 @@
 // Database connection and queries
-import { Pool, PoolClient } from 'pg';
-import dotenv from 'dotenv';
+import { Pool, PoolClient } from "pg";
+import dotenv from "dotenv";
 
 // Load environment variables from .env file
 dotenv.config();
 
 // Create a connection pool
 const pool = new Pool({
-  user: process.env.DB_USER || 'postgres',
-  host: process.env.DB_HOST || 'localhost',
-  database: process.env.DB_NAME || 'agent_discovery',
-  password: process.env.DB_PASSWORD || 'postgres',
-  port: parseInt(process.env.DB_PORT || '5432'),
+  connectionString: process.env.DATABASE_URL,
 });
 
 // Test the connection
-pool.query('SELECT NOW()', (err) => {
+pool.query("SELECT NOW()", (err) => {
   if (err) {
-    console.error('Database connection error:', err);
+    console.error("Database connection error:", err);
   } else {
-    console.log('Database connected successfully');
+    console.log("Database connected successfully");
   }
 });
 
@@ -34,10 +30,10 @@ export async function query(text: string, params?: unknown[]) {
     const start = Date.now();
     const res = await pool.query(text, params);
     const duration = Date.now() - start;
-    console.log('Executed query', { text, duration, rows: res.rowCount });
+    console.log("Executed query", { text, duration, rows: res.rowCount });
     return res;
   } catch (error) {
-    console.error('Error executing query', error);
+    console.error("Error executing query", error);
     throw error;
   }
 }

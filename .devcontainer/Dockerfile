@@ -28,6 +28,3 @@ RUN if [ "$USERNAME" != "node" ]; then \
 
 # Set the default user
 USER $USERNAME
-
-# The ENTRYPOINT allows the container to run as an executable
-ENTRYPOINT [ "/bin/bash", "-c" ]
